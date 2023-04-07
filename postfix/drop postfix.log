@@ -1,0 +1,24 @@
+[sorokinav@server01 ~]$ ansible-playbook --tags "drop postfix" postfix.yml
+
+PLAY [Script for configuring complete mail server] *****************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [158.160.34.245]
+
+TASK [Install httpd, mod_ssl, squirrelmail for HTTP; postfix for SMTP; dovecot for IMAP; vim, mailx, bind-utils for administration] ***
+[DEPRECATION WARNING]: Invoking "yum" only once while using a loop via 
+squash_actions is deprecated. Instead of using a loop to supply multiple items 
+and specifying `name: "{{item}}"`, please use `name: ['httpd', 'mod_ssl', 
+'postfix', 'vim', 'bind-utils', 'dovecot', 'squirrelmail', 'mailx']` and remove
+ the loop. This feature will be removed in version 2.11. Deprecation warnings 
+can be disabled by setting deprecation_warnings=False in ansible.cfg.
+changed: [158.160.34.245] => (item=[u'httpd', u'mod_ssl', u'postfix', u'vim', u'bind-utils', u'dovecot', u'squirrelmail', u'mailx'])
+
+PLAY RECAP *********************************************************************
+158.160.34.245             : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[sorokinav@server01 ~]$ ssh vinkin@158.160.34.245
+Last login: Fri Apr  7 06:47:50 2023 from 145.255.22.168
+[vinkin@fhm1s7r8e49n1at2lpg8 ~]$ sudo systemctl status postfix
+Unit postfix.service could not be found.
+[vinkin@fhm1s7r8e49n1at2lpg8 ~]$ 

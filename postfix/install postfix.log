@@ -1,0 +1,37 @@
+[sorokinav@server01 ~]$ ansible-playbook --tags "init postfix" postfix.yml
+
+PLAY [Script for configuring complete mail server] *****************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [158.160.34.245]
+
+TASK [Install httpd, mod_ssl, squirrelmail for HTTP; postfix for SMTP; dovecot for IMAP; vim, mailx, bind-utils for administration] ***
+[DEPRECATION WARNING]: Invoking "yum" only once while using a loop via 
+squash_actions is deprecated. Instead of using a loop to supply multiple items 
+and specifying `name: "{{item}}"`, please use `name: ['httpd', 'mod_ssl', 
+'postfix', 'vim', 'bind-utils', 'dovecot', 'squirrelmail', 'mailx']` and remove
+ the loop. This feature will be removed in version 2.11. Deprecation warnings 
+can be disabled by setting deprecation_warnings=False in ansible.cfg.
+changed: [158.160.34.245] => (item=[u'httpd', u'mod_ssl', u'postfix', u'vim', u'bind-utils', u'dovecot', u'squirrelmail', u'mailx'])
+
+PLAY RECAP *********************************************************************
+158.160.34.245             : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[sorokinav@server01 ~]$ ssh vinkin@158.160.34.245
+Last login: Fri Apr  7 06:38:04 2023 from 145.255.22.168
+[vinkin@fhm1s7r8e49n1at2lpg8 ~]$ sudo systemctl status postfix
+● postfix.service - Postfix Mail Transport Agent
+   Loaded: loaded (/usr/lib/systemd/system/postfix.service; enabled; vendor preset: disabled)
+   Active: active (running) since Пт 2023-04-07 06:32:48 UTC; 11min ago
+ Main PID: 1000 (master)
+   CGroup: /system.slice/postfix.service
+           ├─1000 /usr/libexec/postfix/master -w
+           ├─1003 pickup -l -t unix -u
+           └─1004 qmgr -l -t unix -u
+
+апр 07 06:32:43 fhm1s7r8e49n1at2lpg8.auto.internal systemd[1]: Starting Po...
+апр 07 06:32:48 fhm1s7r8e49n1at2lpg8.auto.internal postfix/postfix-script[998]: ...
+апр 07 06:32:48 fhm1s7r8e49n1at2lpg8.auto.internal postfix/master[1000]: d...
+апр 07 06:32:48 fhm1s7r8e49n1at2lpg8.auto.internal systemd[1]: Started Pos...
+Hint: Some lines were ellipsized, use -l to show in full.
+[vinkin@fhm1s7r8e49n1at2lpg8 ~]$ 

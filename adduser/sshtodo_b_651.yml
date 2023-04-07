@@ -1,0 +1,20 @@
+---
+- name: Add user and insert ssh key
+  hosts: myservers
+  gather_facts: yes
+  become: 'yes'
+
+  tasks:
+    
+    - name: Add user
+      user:
+        force: true
+        name: User1
+        groups: wheel
+        create_home: true
+    
+    - name: insert authorized key
+      ansible.posix.authorized_key:
+        user: User1
+        state: present
+        key: '{{ lookup(''file'', ''/home/sorokinav/.ssh/User1.pub'') }}'
